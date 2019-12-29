@@ -12,13 +12,13 @@ camera = cv2.VideoCapture(camera_port)
 def get_image():
  retval, im = camera.read()
  return im
-
+print("Taking image...")
 for i in range(0,ramp_frames):#to adjust light for frames
  temp = get_image()
-print("Taking image...")
+
 camera_capture = get_image()#to keep the modified image
 #try here
-file ="UserIdentification\\testit.png"
+file ="UserIdentification\\unknown.png"
 cv2.imwrite(file, camera_capture)
 del(camera)#to release camera
 
@@ -28,7 +28,7 @@ def get_encoded_faces():#encodes all faces in the folder and returns a dict{name
 
     for dirpath, dnames, fnames in os.walk("./UserIdentification"):
         for f in fnames:
-            if f.endswith(".jpg") or f.endswith(".png") and f!="testit.png":
+            if f.endswith(".jpg") or f.endswith(".png") and f!="unknown.png":
                 face = fr.load_image_file("UserIdentification/" + f)
                 encoding = fr.face_encodings(face)[0]
                 encoded[f.split(".")[0]] = encoding
@@ -59,6 +59,6 @@ def classify_face(im):#to find all faces in an image
         face_names.append(name)
         print(face_names)
 
-classify_face("UserIdentification\\testit.png")
+classify_face("UserIdentification\\unknown.png")
 
 
